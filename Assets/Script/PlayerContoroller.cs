@@ -9,9 +9,23 @@ public class PlayerContoroller : MonoBehaviour
     /// <summary>ジャンプ速度</summary>
     [SerializeField] float _jumpSpeed = 5f;
     /// <summary>ジャンプ中にジャンプボタンを離した時の上昇速度減衰率</summary>
-    [SerializeField] float _gravityDrag = .8f;
+    [SerializeField] float _gravityDrag = .2f;
 
-    public static float highJump = 1;
+    /// <summary>
+    /// [外部変更用]ジャンプ力上昇のレート。倍率で設定する。
+    /// </summary>
+    public static float highJumpRate = 1f;
+    /// <summary>
+    /// [外部変更用]低速落下用のレート。基本的に3か1でOK。
+    /// </summary>
+    public static float levitation = 3;
+    /// <summary>
+    /// [外部変更用]移動速度のレート。倍率で設定。
+    /// </summary>
+    public static float highSpeed = 1;
+
+
+        
     Rigidbody2D _rb = default;
     /// <summary>接地フラグ</summary>
     bool _isGrounded = false;
@@ -58,18 +72,19 @@ public class PlayerContoroller : MonoBehaviour
 
     void Movement()
     {
+        _rb.gravityScale = 3;
         float h = Input.GetAxis("Horizontal");
         Vector2 velocity = _rb.velocity;   // この変数 velocity に速度を計算して、最後に Rigidbody2D.velocity に戻す
 
         if (h != 0)
         {
-            velocity.x = h * _moveSpeed;
+            velocity.x = h * _moveSpeed * highSpeed;
         }
 
         if (Input.GetButtonDown("Jump") && _isGrounded)
         {
             _isGrounded = false;
-            velocity.y = _jumpSpeed * highJump;
+            velocity.y = _jumpSpeed * highJumpRate;
         }
         else if (!Input.GetButton("Jump") && velocity.y > 0)
         {
@@ -77,7 +92,14 @@ public class PlayerContoroller : MonoBehaviour
             velocity.y *= _gravityDrag;
         }
 
+        if (velocity.y < -1)
+        {
+            _rb.gravityScale = levitation;
+        }
+
         _rb.velocity = velocity;
+        //Debug.Log(_rb.velocity);
+        
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
