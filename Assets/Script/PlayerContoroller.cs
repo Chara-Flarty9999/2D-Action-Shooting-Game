@@ -10,6 +10,10 @@ public class PlayerContoroller : MonoBehaviour
     [SerializeField] float _jumpSpeed = 5f;
     /// <summary>ジャンプ中にジャンプボタンを離した時の上昇速度減衰率</summary>
     [SerializeField] float _gravityDrag = .2f;
+    /// <summary>発射する弾丸をPrefabで指定する。</summary>
+    [SerializeField] GameObject _bullet;
+    /// <summary>プレイヤー指定</summary>
+    [SerializeField] GameObject _player;
 
     /// <summary>
     /// [外部変更用]ジャンプ力上昇のレート。倍率で設定する。
@@ -24,18 +28,19 @@ public class PlayerContoroller : MonoBehaviour
     /// </summary>
     public static float highSpeed = 1;
 
-
+    public float Rote;
         
     Rigidbody2D _rb = default;
     /// <summary>接地フラグ</summary>
     bool _isGrounded = false;
     Vector3 _initialPosition = default;
-    Animator _anim = default;
+    //Animator _anim = default;
     /// <summary>持っているアイテムのリスト</summary>
     List<ItemBase> _itemList = new List<ItemBase>();
     // Start is called before the first frame update
     void Start()
     {
+        _player = GameObject.Find("Player");
         _rb = GetComponent<Rigidbody2D>();
         _initialPosition = this.transform.position;
     }
@@ -58,6 +63,11 @@ public class PlayerContoroller : MonoBehaviour
             }
         }
 
+        if (Input.GetButtonDown("Fire2"))
+        {
+            Instantiate(_bullet, _player.transform.position,Quaternion.identity);
+        }
+
         // 画面外に落ちたら初期位置に戻す
         if (this.transform.position.y < -15)
         {
@@ -74,6 +84,14 @@ public class PlayerContoroller : MonoBehaviour
     {
         _rb.gravityScale = 3;
         float h = Input.GetAxis("Horizontal");
+        if (h > 0)
+        {
+            Rote = 0;
+        }
+        else if (h < 0)
+        {
+            Rote = 180;
+        }
         Vector2 velocity = _rb.velocity;   // この変数 velocity に速度を計算して、最後に Rigidbody2D.velocity に戻す
 
         if (h != 0)
@@ -104,11 +122,17 @@ public class PlayerContoroller : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        _isGrounded = true;
+        if (collision.tag == "Ground")
+        {
+            _isGrounded = true;
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        _isGrounded = false;
+        if (collision.tag == "Ground")
+        {
+            _isGrounded = false;
+        }
     }
 }
