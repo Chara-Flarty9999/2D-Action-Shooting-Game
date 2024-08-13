@@ -33,8 +33,11 @@ AnimatorStateTransition:
   m_PrefabAsset: {fileID: 0}
   m_Name: 
   m_Conditions:
+  - m_ConditionMode: 2
+    m_ConditionEvent: PlayOnCollision
+    m_EventTreshold: 0
   - m_ConditionMode: 6
-    m_ConditionEvent: _liftmode
+    m_ConditionEvent: Liftmoving
     m_EventTreshold: 2
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 5303433351346445843}
@@ -45,7 +48,7 @@ AnimatorStateTransition:
   m_TransitionDuration: 0.25
   m_TransitionOffset: 0
   m_ExitTime: 0.75
-  m_HasExitTime: 1
+  m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
@@ -84,9 +87,12 @@ AnimatorStateTransition:
   m_PrefabAsset: {fileID: 0}
   m_Name: 
   m_Conditions:
+  - m_ConditionMode: 2
+    m_ConditionEvent: PlayOnCollision
+    m_EventTreshold: 0
   - m_ConditionMode: 6
-    m_ConditionEvent: _liftmode
-    m_EventTreshold: 1
+    m_ConditionEvent: Liftmoving
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -2442507538033833777}
   m_Solo: 0
@@ -96,7 +102,7 @@ AnimatorStateTransition:
   m_TransitionDuration: 0.25
   m_TransitionOffset: 0
   m_ExitTime: 0.75
-  m_HasExitTime: 1
+  m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
@@ -160,9 +166,12 @@ AnimatorStateTransition:
   m_PrefabAsset: {fileID: 0}
   m_Name: 
   m_Conditions:
-  - m_ConditionMode: 6
-    m_ConditionEvent: _liftmode
+  - m_ConditionMode: 2
+    m_ConditionEvent: PlayOnCollision
     m_EventTreshold: 0
+  - m_ConditionMode: 6
+    m_ConditionEvent: Liftmoving
+    m_EventTreshold: 3
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -5699573244501240209}
   m_Solo: 0
@@ -172,7 +181,7 @@ AnimatorStateTransition:
   m_TransitionDuration: 0.25
   m_TransitionOffset: 0
   m_ExitTime: 0.75
-  m_HasExitTime: 1
+  m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
@@ -186,10 +195,16 @@ AnimatorController:
   m_Name: LiftStraight
   serializedVersion: 5
   m_AnimatorParameters:
-  - m_Name: _liftmode
+  - m_Name: Liftmoving
     m_Type: 3
     m_DefaultFloat: 0
-    m_DefaultInt: 1
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 0}
+  - m_Name: PlayOnCollision
+    m_Type: 4
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
   m_AnimatorLayers:
@@ -225,7 +240,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 956522447e5dbde4e9e3bd840f61a5ee, type: 2}
+  m_Motion: {fileID: 7400000, guid: 9db9b121b789e2e45820a2e30c860ca2, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -265,9 +280,12 @@ AnimatorStateTransition:
   m_PrefabAsset: {fileID: 0}
   m_Name: 
   m_Conditions:
+  - m_ConditionMode: 2
+    m_ConditionEvent: PlayOnCollision
+    m_EventTreshold: 0
   - m_ConditionMode: 6
-    m_ConditionEvent: _liftmode
-    m_EventTreshold: 3
+    m_ConditionEvent: Liftmoving
+    m_EventTreshold: 1
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 4046955378847438609}
   m_Solo: 0
@@ -277,7 +295,7 @@ AnimatorStateTransition:
   m_TransitionDuration: 0.25
   m_TransitionOffset: 0
   m_ExitTime: 0.75
-  m_HasExitTime: 1
+  m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
@@ -293,10 +311,10 @@ AnimatorState:
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
-  - {fileID: -636452447691542878}
   - {fileID: -4349630553210586578}
-  - {fileID: -6017192158782959625}
   - {fileID: 5685834486080503282}
+  - {fileID: -6017192158782959625}
+  - {fileID: -636452447691542878}
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
