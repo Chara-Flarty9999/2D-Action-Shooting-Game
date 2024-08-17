@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LiftManager : MonoBehaviour
+public class LiftManagerVanish : MonoBehaviour
 {
     /// <summary>初期動作を設定できる。</summary>
     [SerializeField] liftmode liftmoving = default;
@@ -25,6 +25,10 @@ public class LiftManager : MonoBehaviour
     {
         m_anim.SetBool("PlayOnCollision", playOnCollision);
         m_anim.speed = m_animSpeed;
+/*        if (!playOnCollision)
+        {
+            playOnCollision = true;
+        }*/
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -38,23 +42,38 @@ public class LiftManager : MonoBehaviour
         }
     }
 
+    private void Reset()
+    {
+        playOnCollision = true;
+        m_anim.SetBool("Reset?", true);
+    }
+
+    private void starter()
+    {
+        m_anim.SetBool("Reset?", false);
+    }
+
     enum liftmode
     {
         /// <summary>
+        /// 左に動いて消える。
+        /// </summary>
+        Left,
+        /// <summary>
+        /// 左上に動く。
+        /// </summary>
+        LeftUp,
+        /// <summary>
         /// 上に動く。
         /// </summary>
-        Up_RightDown,
+        Up,
         /// <summary>
-        /// 下に動く。
+        /// 右上に動く。
         /// </summary>
-        Down_LeftDown,
-        /// <summary>
-        /// 左に動く。
-        /// </summary>
-        Left_LeftUp,
+        RightUp,
         /// <summary>
         /// 右に動く。
         /// </summary>
-        Right_RightUp,
+        Right,
     }
 }
