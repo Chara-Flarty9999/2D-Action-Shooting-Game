@@ -102,6 +102,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   liftmoving: 0
   playOnCollision: 1
+  m_animSpeed: 1
 --- !u!114 &8335739957176188468
 MonoBehaviour:
   m_ObjectHideFlags: 0
