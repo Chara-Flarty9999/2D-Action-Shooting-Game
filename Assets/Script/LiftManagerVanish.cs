@@ -7,7 +7,7 @@ public class LiftManagerVanish : MonoBehaviour
     /// <summary>‰Šú“®ì‚ğİ’è‚Å‚«‚éB</summary>
     [SerializeField] liftmode liftmoving = default;
     int _liftmode;
-    [SerializeField] bool playOnCollision = default;
+    public bool playOnCollision = default;
     [SerializeField] float m_animSpeed = default;
     Animator m_anim = default;
     // Start is called before the first frame update
@@ -31,7 +31,7 @@ public class LiftManagerVanish : MonoBehaviour
         }*/
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (playOnCollision == true)
         {
@@ -42,13 +42,13 @@ public class LiftManagerVanish : MonoBehaviour
         }
     }
 
-    private void Reset()
+    private void Reseter()
     {
         playOnCollision = true;
         m_anim.SetBool("Reset?", true);
     }
 
-    private void starter()
+    private void Starter()
     {
         m_anim.SetBool("Reset?", false);
     }

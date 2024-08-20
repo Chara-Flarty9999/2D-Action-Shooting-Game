@@ -7,7 +7,7 @@ public class LiftManager : MonoBehaviour
     /// <summary>‰Šú“®ì‚ğİ’è‚Å‚«‚éB</summary>
     [SerializeField] liftmode liftmoving = default;
     int _liftmode;
-    [SerializeField] bool playOnCollision = default;
+    public bool playOnCollision = default;
     [SerializeField] float m_animSpeed = default;
     Animator m_anim = default;
     // Start is called before the first frame update
@@ -27,7 +27,7 @@ public class LiftManager : MonoBehaviour
         m_anim.speed = m_animSpeed;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (playOnCollision == true)
         {
@@ -36,6 +36,11 @@ public class LiftManager : MonoBehaviour
                 playOnCollision = false;
             }
         }
+    }
+
+    public void SwitchOn()
+    {
+        playOnCollision = false;
     }
 
     enum liftmode
