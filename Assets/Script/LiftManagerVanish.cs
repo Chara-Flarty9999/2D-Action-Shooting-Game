@@ -7,7 +7,7 @@ public class LiftManagerVanish : MonoBehaviour
     /// <summary>‰Šú“®ì‚ğİ’è‚Å‚«‚éB</summary>
     [SerializeField] liftmode liftmoving = default;
     int _liftmode;
-    public bool playOnCollision = default;
+    [SerializeField] bool playOnCollision = default;
     [SerializeField] float m_animSpeed = default;
     Animator m_anim = default;
     // Start is called before the first frame update
