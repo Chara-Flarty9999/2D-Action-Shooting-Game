@@ -9,11 +9,13 @@ public class LiftManager : MonoBehaviour
     int _liftmode;
     [SerializeField] bool playOnCollision = default;
     [SerializeField] float m_animSpeed = default;
+    AudioSource m_audioSource;
     Animator m_anim = default;
     // Start is called before the first frame update
     void Start()
     {
         m_anim = GetComponent<Animator>();
+        m_audioSource = GetComponent<AudioSource>();
         _liftmode = (int)liftmoving;
         Debug.Log(_liftmode);
         m_anim.SetInteger("Liftmoving", _liftmode);
@@ -41,6 +43,11 @@ public class LiftManager : MonoBehaviour
     public void SwitchOn()
     {
         playOnCollision = false;
+    }
+
+    public void LiftSound()
+    {
+        m_audioSource.Play();
     }
 
     enum liftmode

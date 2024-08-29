@@ -75,5 +75,9 @@ public class LiftManagerVanish : MonoBehaviour
         /// ‰E‚É“®‚­B
         /// </summary>
         Right,
+        /// <summary>
+        /// —‚¿‚é‹““®B
+        /// </summary>
+        Fall,
     }
 }
