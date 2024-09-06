@@ -101,7 +101,6 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetButtonDown("Jump") && _isGrounded)
         {
-            _isGrounded = false;
             velocity.y = _jumpSpeed * highJumpRate;
         }
         else if (!Input.GetButton("Jump") && velocity.y > 0)
@@ -120,14 +119,6 @@ public class PlayerController : MonoBehaviour
         
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.tag == "Ground")
-        {
-            _isGrounded = true;
-        }
-    }
-
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.tag == "Ground")
@@ -135,4 +126,16 @@ public class PlayerController : MonoBehaviour
             _isGrounded = false;
         }
     }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "Ground")
+        {
+            if(!_isGrounded)
+            {
+                _isGrounded = true;
+            }
+        }
+    }
+
+
 }
