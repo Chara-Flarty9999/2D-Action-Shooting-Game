@@ -52,14 +52,16 @@ public class Knife : MonoBehaviour
     void Start()
     {
         //スポーン時の情報を取得する
+        audioSource = GetComponent<AudioSource>();
+        mesh = GetComponent<SpriteRenderer>();
         GameObject spawner = GameObject.Find("SpawnArea");
         KnifeSpawn knife = spawner.GetComponent<KnifeSpawn>();
+        rigidbody2d = this.GetComponent<Rigidbody2D>();
+
         _rote = knife.rote;
         _magnification = knife.magnification;
         transform.rotation = Quaternion.Euler(0, 0, _rote);
-        audioSource = GetComponent<AudioSource>();
-        mesh = GetComponent<SpriteRenderer>();
-        rigidbody2d = this.GetComponent<Rigidbody2D>();
+
         StartCoroutine("Transparent");
 
         if (m_play == true)
