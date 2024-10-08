@@ -8,6 +8,22 @@ public class KnifeSpawn : MonoBehaviour
 
     float y;
     float x;
+
+    //ブラスター専用の情報
+    /// <summary>ブラスターの初期位置</summary>
+    public ClossBlaster.StartInfo f_place;
+    /// <summary>ブラスターの移動情報</summary>
+    public ClossBlaster.MoveInfo m_place;
+    /// <summary>ブラスターのサイズ</summary>
+    public float blasterSize;
+    /// <summary>ブラスター発射までの遅延時間</summary>
+    public int beamWait;
+    /// <summary>ブラスターの発射期間(ループ回数)</summary>
+    public int beamTime;
+    /// <summary>ブラスターの色の指定</summary>
+    public ClossBlaster.BlasterColor blasterColor;
+
+
     /// <summary>
     /// 直進するナイフ。
     /// </summary>
@@ -20,6 +36,12 @@ public class KnifeSpawn : MonoBehaviour
     /// 炸裂弾。
     /// </summary>
     [SerializeField] GameObject m_spawn3Prefab = default;
+    /// <summary>
+    /// クロスブラスター
+    /// </summary>
+    [SerializeField] GameObject m_clossBlasterPrefab = default;
+
+
     public int rote;
     public float blastWaitTime;
     public float magnification;
@@ -35,11 +57,21 @@ public class KnifeSpawn : MonoBehaviour
     void Start()
     {
         _AudioSource = GetComponent<AudioSource>();
-        _player = GameObject.Find("Square");
+        _player = GameObject.Find("Player");
         life = _player.GetComponent<PlayerHitbox>();
-        StartCoroutine("Hard");
+        StartCoroutine("Test");
     }
 
+    IEnumerator Test()
+    {
+        f_place = new ClossBlaster.StartInfo(0, 0, 0);
+        m_place = new ClossBlaster.MoveInfo(0.01f, 0, -1);
+        blasterSize = 1;
+        beamWait = 1;
+        beamTime = 5;
+        Instantiate(m_clossBlasterPrefab);
+        yield return new WaitForSeconds(0.2f);
+    }
 
     IEnumerator Hard()
     {
@@ -49,7 +81,7 @@ public class KnifeSpawn : MonoBehaviour
 
         for (int i = 0; i < 30; i++)
         {
-
+             
             //transform.position = Vector3.zero;
             rote = UnityEngine.Random.Range(150, 210);
             blastWaitTime = 0.2f;
@@ -497,6 +529,17 @@ public class KnifeSpawn : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+
+
+
+
+        f_place = new ClossBlaster.StartInfo(0, 0, 0);
+        m_place = new ClossBlaster.MoveInfo(0, 0, 0);
+
+
+
+
 
     }
 }

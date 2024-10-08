@@ -1,17 +1,17 @@
-using DG.Tweening;
 using UnityEngine;
+using DG.Tweening;
 
 public class Blaster : MonoBehaviour
 {
-    SpriteRenderer renderer;
+    SpriteRenderer spriterenderer;
     AudioSource audioSource;
 
     // Start is called before the first frame update
     void Start()
     {
-        renderer = GetComponent<SpriteRenderer>();
+        spriterenderer = GetComponent<SpriteRenderer>();
         audioSource = GetComponent<AudioSource>();
-        renderer.color -= new Color(0f, 0f, 0f, 255f);
+        spriterenderer.color -= new Color(0f, 0f, 0f, 255f);
         new MoveInfo(transform.position, 5);
     }
 
@@ -21,12 +21,12 @@ public class Blaster : MonoBehaviour
 
     }
 
-    public void BlasterCharge(StartInfo startInfo,MoveInfo moveInfo,float size,int waittime, int looplong, BlasterColor color)
+    public void BlasterCharge(StartInfo startInfo, MoveInfo moveInfo, float size, int waittime, int looplong, BlasterColor color)
     {
         this.transform.position = startInfo.vector2;
-        
 
-        
+
+
 
     }
 
@@ -59,10 +59,10 @@ public class Blaster : MonoBehaviour
 
         public StartInfo(float x, float y, int di)
         {
-            this .x = x;
-            this .y = y;
-            this .di = di;
-            this .vector2 = new Vector2(x,y);
+            this.x = x;
+            this.y = y;
+            this.di = di;
+            this.vector2 = new Vector2(x, y);
         }
     }
 
@@ -71,6 +71,6 @@ public class Blaster : MonoBehaviour
         white,
         orange,
         blue
-        
+
     }
 }
