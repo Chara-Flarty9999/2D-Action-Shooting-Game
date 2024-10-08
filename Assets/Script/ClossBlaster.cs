@@ -1,6 +1,7 @@
 using UnityEngine;
 using DG.Tweening;
 using System.Collections;
+using UnityEditorInternal;
 
 public class ClossBlaster : MonoBehaviour
 {
@@ -9,7 +10,7 @@ public class ClossBlaster : MonoBehaviour
 
     MoveInfo _moveInfo;
     StartInfo _startInfo;
-    float _blasterSize;
+    public float _blasterSize;
     int _beamWait;
     int _beamLoop;
     BlasterColor _blasterColor;
@@ -30,7 +31,6 @@ public class ClossBlaster : MonoBehaviour
 
 
 
-    // Start is called before the first frame update
     void Start()
     {
         GameObject spawner = GameObject.Find("SpawnArea");
@@ -47,6 +47,7 @@ public class ClossBlaster : MonoBehaviour
         _beamWait = spawndata.beamWait;
         _beamLoop = spawndata.beamTime;
         _blasterColor = spawndata.blasterColor;
+
 
         ClossBlasterCharge(_startInfo, _moveInfo, _blasterSize, _beamWait, _beamLoop, _blasterColor);
     }
@@ -99,6 +100,11 @@ public class ClossBlaster : MonoBehaviour
             yield return new WaitForSeconds(0.01f);
         }
         Debug.Log("ÉãÅ[ÉvÇµÇΩÇÊ");
+        spriterenderer.sprite = endBeam;
+        GameObject gameObject = GameObject.Find("ClossBeam(Clone)");
+        ClossBlasterBeam clossBlasterBeam = gameObject.GetComponent<ClossBlasterBeam>();
+        clossBlasterBeam.ClossBlasterBeamExit();
+        this.spriterenderer.material.DOFade(0f, 0.5f);
     }
 
 

@@ -65,10 +65,10 @@ public class KnifeSpawn : MonoBehaviour
     IEnumerator Test()
     {
         f_place = new ClossBlaster.StartInfo(0, 0, 0);
-        m_place = new ClossBlaster.MoveInfo(0.01f, 0, -1);
-        blasterSize = 1;
+        m_place = new ClossBlaster.MoveInfo(0.01f, 0, 0);
+        blasterSize = 1.2f;
         beamWait = 1;
-        beamTime = 5;
+        beamTime = 3;
         Instantiate(m_clossBlasterPrefab);
         yield return new WaitForSeconds(0.2f);
     }
