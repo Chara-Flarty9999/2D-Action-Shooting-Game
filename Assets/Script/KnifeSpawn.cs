@@ -1,14 +1,18 @@
 using System;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class KnifeSpawn : MonoBehaviour
 {
+
+    [SerializeField] UnityEvent _actions;
     public int damage; //特に使ってない
 
     float y;
     float x;
-
+    
     //ブラスター専用の情報
     /// <summary>ブラスターの初期位置</summary>
     public ClossBlaster.StartInfo f_place;
@@ -64,8 +68,15 @@ public class KnifeSpawn : MonoBehaviour
 
     IEnumerator Test()
     {
-        f_place = new ClossBlaster.StartInfo(0, 0, 0);
-        m_place = new ClossBlaster.MoveInfo(0.01f, 0, 0);
+        f_place = new ClossBlaster.StartInfo(-3,-3, 0);
+        m_place = new ClossBlaster.MoveInfo(0,0, 0);
+        blasterSize = 1.2f;
+        beamWait = 1;
+        beamTime = 3;
+        Instantiate(m_clossBlasterPrefab);
+        yield return new WaitForEndOfFrame();
+        f_place = new ClossBlaster.StartInfo(3,3, 0);
+        m_place = new ClossBlaster.MoveInfo(0,0, 0);
         blasterSize = 1.2f;
         beamWait = 1;
         beamTime = 3;
@@ -529,17 +540,13 @@ public class KnifeSpawn : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-
-
-
-
-        f_place = new ClossBlaster.StartInfo(0, 0, 0);
-        m_place = new ClossBlaster.MoveInfo(0, 0, 0);
-
-
-
-
-
+        
     }
+
+    public void BlasterTest()
+    {
+        StartCoroutine("Test");
+    }
+
+    
 }

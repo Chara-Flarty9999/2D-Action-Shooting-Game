@@ -1,6 +1,4 @@
 using DG.Tweening;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ClossBlasterBeam : MonoBehaviour
@@ -16,9 +14,7 @@ public class ClossBlasterBeam : MonoBehaviour
     AudioSource audioSource;
     Animator m_anim;
 
-    ClossBlaster.MoveInfo _moveInfo;
     float _blasterSize;
-    int _beamWait;
     int _beamLoop;
     ClossBlaster.BlasterColor _blasterColor;
 
@@ -30,6 +26,7 @@ public class ClossBlasterBeam : MonoBehaviour
     void Awake()
     {
         _Start = true;
+        transform.localPosition = Vector3.zero;
     }
     void Start()
     {
@@ -47,8 +44,10 @@ public class ClossBlasterBeam : MonoBehaviour
 
     public void ClossBlasterBeamExit()
     {
+        spriterenderer = GetComponent<SpriteRenderer>();
         _Exit = true;
-        this.spriterenderer.material.DOFade(0f, 1.5f);
+        this.spriterenderer.material.DOFade(0f, 0.5f);
+        Invoke("ToDestroy", 3f);
     }
     // Update is called once per frame
     void Update()
@@ -56,6 +55,10 @@ public class ClossBlasterBeam : MonoBehaviour
         transform.localScale = new Vector3(_clossBlasterSizeRate, _clossBlasterSizeRate);
         m_anim.SetBool("Start", _Start);
         m_anim.SetBool("Exit", _Exit);
+    }
+    void ToDestroy()
+    {
+        Destroy(this.gameObject);
     }
 }
 

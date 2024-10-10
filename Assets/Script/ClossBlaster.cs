@@ -2,6 +2,7 @@ using UnityEngine;
 using DG.Tweening;
 using System.Collections;
 using UnityEditorInternal;
+using UnityEngine.UIElements;
 
 public class ClossBlaster : MonoBehaviour
 {
@@ -41,6 +42,7 @@ public class ClossBlaster : MonoBehaviour
         spriterenderer.material.color = new Color(1f, 1f, 1f, 0f);
         new MoveInfo(transform.position, 5);
 
+        //この下の6つをwave等のスクリプトで設定してくだされ
         _startInfo = spawndata.f_place;
         _moveInfo = spawndata.m_place;
         _blasterSize = spawndata.blasterSize;
@@ -50,15 +52,6 @@ public class ClossBlaster : MonoBehaviour
 
 
         ClossBlasterCharge(_startInfo, _moveInfo, _blasterSize, _beamWait, _beamLoop, _blasterColor);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-
-
-        
     }
 
     /// <summary>
@@ -72,11 +65,12 @@ public class ClossBlaster : MonoBehaviour
     /// <param name="beamcolor">白か青かオレンジを設定する。</param>
     public void ClossBlasterCharge(StartInfo startInfo, MoveInfo moveInfo, float size, int waittime, int looplong, BlasterColor beamcolor)
     {
-        this.transform.localScale = new Vector3 (size,size);
+        this.transform.localScale = new Vector3 (0,0);
         this.transform.position = startInfo.vector3;
         this.transform.eulerAngles = new Vector3(0,0, startInfo.di);
         audioSource.PlayOneShot(blasterSpawn);
-        this.spriterenderer.material.DOFade(1f, 1.5f);
+        this.spriterenderer.material.DOFade(1f, 1.0f);
+        this.transform.DOScale(size, 0.5f);
 
         Debug.Log("処理したぞ");
 
@@ -92,6 +86,7 @@ public class ClossBlaster : MonoBehaviour
         //Instantiateを追加する
         var parent = this.transform;
         Instantiate(_BeamPrefab, Vector3.zero, Quaternion.identity, parent);
+        yield return new WaitForSeconds(0.01f);
         for (int i = 0; i < (looplong + 2) * 50; i++) 
         {
             Debug.Log("処理中");
@@ -101,13 +96,19 @@ public class ClossBlaster : MonoBehaviour
         }
         Debug.Log("ループしたよ");
         spriterenderer.sprite = endBeam;
-        GameObject gameObject = GameObject.Find("ClossBeam(Clone)");
+
+        GameObject gameObject = transform.GetChild(0).gameObject;
         ClossBlasterBeam clossBlasterBeam = gameObject.GetComponent<ClossBlasterBeam>();
         clossBlasterBeam.ClossBlasterBeamExit();
         this.spriterenderer.material.DOFade(0f, 0.5f);
+        this.transform.DOScale(0, 0.5f);
+        Invoke("ToDestroy", 1f);
     }
 
-
+    public void ToDestroy()
+    {
+        Destroy(this.gameObject);
+    }
     /// <summary>
     /// ブラスターの移動情報を入力する
     /// </summary>
