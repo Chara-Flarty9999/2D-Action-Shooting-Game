@@ -44,6 +44,10 @@ public class KnifeSpawn : MonoBehaviour
     /// クロスブラスター
     /// </summary>
     [SerializeField] GameObject m_clossBlasterPrefab = default;
+    /// <summary>
+    /// 通常ブラスター
+    /// </summary>
+    [SerializeField] GameObject m_normalBlasterPrefab = default;
 
 
     public int rote;
@@ -81,7 +85,22 @@ public class KnifeSpawn : MonoBehaviour
         beamWait = 1;
         beamTime = 3;
         Instantiate(m_clossBlasterPrefab);
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(1f);
+        int gb_di = 0;
+
+        for (int i = 0; i < 72; i++) 
+        {
+            Vector3 rotatevector3 = AngleToVector2(gb_di); 
+            f_place = new ClossBlaster.StartInfo(rotatevector3 * -10, gb_di);
+            m_place = new ClossBlaster.MoveInfo(rotatevector3 * -10, gb_di);
+            blasterSize = 0.7f;
+            beamWait = 0;
+            beamTime = 0;
+            Instantiate(m_normalBlasterPrefab);
+            yield return new WaitForSeconds(0.05f);
+            gb_di += 10;
+        }
+
     }
 
     IEnumerator Hard()
@@ -548,5 +567,9 @@ public class KnifeSpawn : MonoBehaviour
         StartCoroutine("Test");
     }
 
-    
+    public static Vector3 AngleToVector2(float angle)
+    {
+        var radian = angle * (Mathf.PI / 180);
+        return new Vector3(Mathf.Cos(radian), Mathf.Sin(radian)).normalized;
+    }
 }

@@ -40,7 +40,6 @@ public class ClossBlaster : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         spriterenderer.color -= new Color(0f, 0f, 0f, 0f);
         spriterenderer.material.color = new Color(1f, 1f, 1f, 0f);
-        new MoveInfo(transform.position, 5);
 
         //この下の6つをwave等のスクリプトで設定してくだされ
         _startInfo = spawndata.f_place;

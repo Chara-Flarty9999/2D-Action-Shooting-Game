@@ -465,7 +465,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 254782666}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -3.66, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3474,6 +3474,7 @@ MonoBehaviour:
   m_spawn2Prefab: {fileID: 7236440957748947273, guid: c85af861b10e13d4bb979b438794a891, type: 3}
   m_spawn3Prefab: {fileID: 0}
   m_clossBlasterPrefab: {fileID: 3253469747441192429, guid: 0c5fa101cbb95dc4087eca7fd11b57d3, type: 3}
+  m_normalBlasterPrefab: {fileID: 5512632969975763069, guid: 5e34ef82683069f439cdd5a4a58d0518, type: 3}
   rote: 0
   blastWaitTime: 0
   magnification: 0
