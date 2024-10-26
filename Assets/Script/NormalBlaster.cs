@@ -82,26 +82,22 @@ public class NormalBlaster : MonoBehaviour
 
         });
         yield return new WaitUntil(() => firstmove);
-        Debug.Log("処理したぞ");
+
         yield return new WaitForSeconds(waittime);
         firstAnim = true;
         m_anim.SetBool("firstAnim", firstAnim);
         recoilMove = AngleToVector2(moveInfo.di);
         yield return new WaitForSeconds(0.25f);
         audioSource.PlayOneShot(blasterbeam);
-        Debug.Log("スプライトまでは変えました");
-        //Instantiateを追加する
+
         StartCoroutine("BlasterRecoil");
         var parent = this.transform;
         Instantiate(_BeamPrefab, Vector3.zero, Quaternion.identity, parent);
         yield return new WaitForSeconds(0.01f);
         for (int i = 0; i < (looplong + 2) * 10; i++)
         {
-            Debug.Log("処理中");
             yield return new WaitForSeconds(0.01f);
         }
-        Debug.Log("ループしたよ");
-
         GameObject gameObject = transform.GetChild(0).gameObject;
         NormalBlasterBeam normalBlasterBeam = gameObject.GetComponent<NormalBlasterBeam>();
         normalBlasterBeam.NormalBlasterBeamExit();

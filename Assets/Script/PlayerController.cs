@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     /// <summary>移動速度</summary>
-    [SerializeField] float _moveSpeed = 3f;
+    [SerializeField] float _moveSpeed = 8f;
     /// <summary>ジャンプ速度</summary>
     [SerializeField] float _jumpSpeed = 5f;
     /// <summary>ジャンプ中にジャンプボタンを離した時の上昇速度減衰率</summary>
@@ -14,6 +14,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] GameObject _bullet;
     /// <summary>プレイヤー指定</summary>
     [SerializeField] GameObject _player;
+
+    float h;
+    float v;
 
     /// <summary>
     /// [外部変更用]ジャンプ力上昇のレート。倍率で設定する。
@@ -29,8 +32,10 @@ public class PlayerController : MonoBehaviour
     public static float highSpeed = 1;
 
     public float Rote;
+    public SoulMode Soul;
         
     Rigidbody2D _rb = default;
+    SpriteRenderer _sprite = default;
     /// <summary>接地フラグ</summary>
     bool _isGrounded = false;
     Vector3 _initialPosition = default;
@@ -38,10 +43,14 @@ public class PlayerController : MonoBehaviour
     /// <summary>持っているアイテムのリスト</summary>
     List<ItemBase> _itemList = new List<ItemBase>();
     // Start is called before the first frame update
+
+
+    private int soulMode { get; set; }
     void Start()
     {
         _player = GameObject.Find("Player");
         _rb = GetComponent<Rigidbody2D>();
+        _sprite = GetComponent<SpriteRenderer>();
         _initialPosition = this.transform.position;
     }
 
@@ -82,41 +91,87 @@ public class PlayerController : MonoBehaviour
 
     void Movement()
     {
-        _rb.gravityScale = 3;
-        float h = Input.GetAxis("Horizontal");
-        if (h > 0)
+        if(Soul == SoulMode.blue) 
         {
-            Rote = 0;
-        }
-        else if (h < 0)
-        {
-            Rote = 180;
-        }
-        Vector2 velocity = _rb.velocity;   // この変数 velocity に速度を計算して、最後に Rigidbody2D.velocity に戻す
+            _sprite.color = new Color(0, 0, 1);
+            _moveSpeed = 8f;
 
-        if (h != 0)
-        {
-            velocity.x = h * _moveSpeed * highSpeed;
+            _rb.gravityScale = 3;
+            float h = Input.GetAxis("Horizontal");
+            if (h > 0)
+            {
+                Rote = 0;
+            }
+            else if (h < 0)
+            {
+                Rote = 180;
+            }
+            Vector2 velocity = _rb.velocity;   // この変数 velocity に速度を計算して、最後に Rigidbody2D.velocity に戻す
+
+            if (h != 0)
+            {
+                velocity.x = h * _moveSpeed * highSpeed;
+            }
+
+            if (Input.GetButtonDown("Jump") && _isGrounded)
+            {
+                velocity.y = _jumpSpeed * highJumpRate;
+            }
+            else if (!Input.GetButton("Jump") && velocity.y > 0)
+            {
+                // 上昇中にジャンプボタンを離したら上昇を減速する
+                velocity.y *= _gravityDrag;
+            }
+
+            if (velocity.y < -1)
+            {
+                _rb.gravityScale = levitation;
+            }
+
+            _rb.velocity = velocity;
+            //Debug.Log(_rb.velocity);
+
         }
 
-        if (Input.GetButtonDown("Jump") && _isGrounded)
+        if(Soul == SoulMode.red)
         {
-            velocity.y = _jumpSpeed * highJumpRate;
-        }
-        else if (!Input.GetButton("Jump") && velocity.y > 0)
-        {
-            // 上昇中にジャンプボタンを離したら上昇を減速する
-            velocity.y *= _gravityDrag;
+            _sprite.color = new Color(1, 0, 0);
+            _rb.gravityScale = 0;
+            if (Input.GetKey(KeyCode.X) == true)
+            {
+                _moveSpeed = 2.5f;
+            }
+            else
+            {
+                _moveSpeed = 7f;
+            }
+            // 水平方向の入力を検出する
+            h = Input.GetAxisRaw("Horizontal");
+            //Debug.Log(h);
+            v = Input.GetAxisRaw("Vertical");
+            //Debug.Log(v);
+            // 入力に応じてパドルを水平方向に動かす
+            _rb.velocity = new Vector3(h * _moveSpeed, v * _moveSpeed);
+
+            if (transform.position.x <= -11.95f)
+            {
+                transform.position = new Vector2(-11.95f, this.transform.position.y);
+            }
+            if (transform.position.x >= 11.95f)
+            {
+                transform.position = new Vector2(11.95f, this.transform.position.y);
+            }
+            if (transform.position.y <= -6.5f)
+            {
+                transform.position = new Vector2(this.transform.position.x, -6.5f);
+            }
+            if (transform.position.y >= 6.5f)
+            {
+                transform.position = new Vector2(this.transform.position.x, 6.5f);
+            }
         }
 
-        if (velocity.y < -1)
-        {
-            _rb.gravityScale = levitation;
-        }
 
-        _rb.velocity = velocity;
-        //Debug.Log(_rb.velocity);
-        
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -137,5 +192,9 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-
+    public enum SoulMode
+    {
+        red,
+        blue,
+    }
 }

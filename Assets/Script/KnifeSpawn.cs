@@ -76,19 +76,19 @@ public class KnifeSpawn : MonoBehaviour
         m_place = new ClossBlaster.MoveInfo(0,0, 0);
         blasterSize = 1.2f;
         beamWait = 1;
-        beamTime = 3;
+        beamTime = 1;
         Instantiate(m_clossBlasterPrefab);
         yield return new WaitForEndOfFrame();
         f_place = new ClossBlaster.StartInfo(3,3, 0);
         m_place = new ClossBlaster.MoveInfo(0,0, 0);
         blasterSize = 1.2f;
         beamWait = 1;
-        beamTime = 3;
+        beamTime = 1;
         Instantiate(m_clossBlasterPrefab);
         yield return new WaitForSeconds(1f);
         int gb_di = 0;
 
-        for (int i = 0; i < 72; i++) 
+        for (int i = 0; i < 60; i++) 
         {
             Vector3 rotatevector3 = AngleToVector2(gb_di); 
             f_place = new ClossBlaster.StartInfo(rotatevector3 * -10, gb_di);
@@ -97,8 +97,8 @@ public class KnifeSpawn : MonoBehaviour
             beamWait = 0;
             beamTime = 0;
             Instantiate(m_normalBlasterPrefab);
-            yield return new WaitForSeconds(0.05f);
-            gb_di += 10;
+            yield return new WaitForSeconds(0.1f);
+            gb_di += 14;
         }
 
     }
