@@ -41,7 +41,7 @@ public class Bomberbullet : MonoBehaviour
         //ƒXƒ|[ƒ“‚Ìî•ñ‚ğæ“¾‚·‚é
         GameObject spawner = GameObject.Find("Player");
         PlayerController knife = spawner.GetComponent<PlayerController>();
-        _rote = knife.Rote;
+        _rote = knife.rote;
         _magnification = 20;
         transform.rotation = Quaternion.Euler(0, 0, _rote);
         mesh = GetComponent<SpriteRenderer>();

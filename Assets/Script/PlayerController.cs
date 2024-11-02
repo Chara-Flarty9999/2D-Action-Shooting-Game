@@ -31,8 +31,10 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     public static float highSpeed = 1;
 
-    public float Rote;
-    public SoulMode Soul;
+    Itemtype _soulState;
+
+    public float rote;
+    public SoulMode soul;
         
     Rigidbody2D _rb = default;
     SpriteRenderer _sprite = default;
@@ -91,7 +93,7 @@ public class PlayerController : MonoBehaviour
 
     void Movement()
     {
-        if(Soul == SoulMode.blue) 
+        if(soul == SoulMode.blue) 
         {
             _sprite.color = new Color(0, 0, 1);
             _moveSpeed = 8f;
@@ -100,11 +102,11 @@ public class PlayerController : MonoBehaviour
             float h = Input.GetAxis("Horizontal");
             if (h > 0)
             {
-                Rote = 0;
+                rote = 0;
             }
             else if (h < 0)
             {
-                Rote = 180;
+                rote = 180;
             }
             Vector2 velocity = _rb.velocity;   // ‚±‚Ì•Ï” velocity ‚É‘¬“x‚ðŒvŽZ‚µ‚ÄAÅŒã‚É Rigidbody2D.velocity ‚É–ß‚·
 
@@ -133,7 +135,7 @@ public class PlayerController : MonoBehaviour
 
         }
 
-        if(Soul == SoulMode.red)
+        if(soul == SoulMode.red)
         {
             _sprite.color = new Color(1, 0, 0);
             _rb.gravityScale = 0;
@@ -196,5 +198,14 @@ public class PlayerController : MonoBehaviour
     {
         red,
         blue,
+    }
+
+    public enum Itemtype
+    {
+        None = 0b0000,
+        Highspeed = 0b0001,
+        Levitation = 0b0010,
+        Highjump = 0b0100,
+        Invincible = 0b1000,
     }
 }
