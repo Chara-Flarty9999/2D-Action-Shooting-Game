@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -14,6 +15,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] GameObject _bullet;
     /// <summary>プレイヤー指定</summary>
     [SerializeField] GameObject _player;
+    /// <summary>ソウル状態変更時のSE</summary>
+    [SerializeField] AudioClip _changeSound;
 
     float h;
     float v;
@@ -31,9 +34,14 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     public static float highSpeed = 1;
 
+    /// <summary>アイテム取得等によるバフの状態をビットフラグで判定。</summary>
     Itemtype _soulState;
 
     public float rote;
+
+    /// <summary>ソウルの状態を指定。外部から変更することによってソウル状態が変わる。
+    /// また、エリア上にSoulModeChangerを設置することによってフィールド上でもソウル状態を変えれる。</summary>
+    [Tooltip("ソウルの状態を設定できる。外部からでも変更可能。")]
     public SoulMode soul;
         
     Rigidbody2D _rb = default;
@@ -41,6 +49,7 @@ public class PlayerController : MonoBehaviour
     /// <summary>接地フラグ</summary>
     bool _isGrounded = false;
     Vector3 _initialPosition = default;
+    AudioSource _audioSource;
     //Animator _anim = default;
     /// <summary>持っているアイテムのリスト</summary>
     List<ItemBase> _itemList = new List<ItemBase>();
@@ -53,6 +62,7 @@ public class PlayerController : MonoBehaviour
         _player = GameObject.Find("Player");
         _rb = GetComponent<Rigidbody2D>();
         _sprite = GetComponent<SpriteRenderer>();
+        _audioSource = GetComponent<AudioSource>();
         _initialPosition = this.transform.position;
     }
 
@@ -191,6 +201,24 @@ public class PlayerController : MonoBehaviour
             {
                 _isGrounded = true;
             }
+        }
+
+        if (collision.tag == "SoulChanger")
+        {
+            GameObject _soulChangerObject = collision.gameObject;
+            SoulModeChanger _soulModeChanger = _soulChangerObject.GetComponent<SoulModeChanger>();
+            if (_soulModeChanger._changeMode == soul)
+            {
+
+            }
+            else
+            {
+                _audioSource.PlayOneShot(_changeSound);
+            }
+            soul = _soulModeChanger._changeMode;
+
+
+            
         }
     }
 

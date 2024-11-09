@@ -86,7 +86,7 @@ public class ClossBlaster : MonoBehaviour
         var parent = this.transform;
         Instantiate(_BeamPrefab, Vector3.zero, Quaternion.identity, parent);
         yield return new WaitForSeconds(0.01f);
-        for (int i = 0; i < (looplong + 2) * 10 -; i++) 
+        for (int i = 0; i < (looplong + 2) * 10; i++) 
         {
             Debug.Log("ˆ—’†");
             transform.position += moveinfo.vector3;

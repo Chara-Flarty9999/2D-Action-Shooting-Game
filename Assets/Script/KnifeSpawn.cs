@@ -55,6 +55,7 @@ public class KnifeSpawn : MonoBehaviour
     public float magnification;
     GameObject _player;
     public PlayerHitbox life;
+    public PlayerController playerController;
     public int movedirection = 0;
     public int bulletNumber;
 
@@ -67,6 +68,7 @@ public class KnifeSpawn : MonoBehaviour
         _AudioSource = GetComponent<AudioSource>();
         _player = GameObject.Find("Player");
         life = _player.GetComponent<PlayerHitbox>();
+        playerController = _player.GetComponent<PlayerController>();
         StartCoroutine("Test");
     }
 
@@ -107,7 +109,7 @@ public class KnifeSpawn : MonoBehaviour
     {
         magnification = 20f;
 
-
+        playerController.soul = PlayerController.SoulMode.red;
 
         for (int i = 0; i < 30; i++)
         {
