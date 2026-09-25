@@ -5,10 +5,10 @@ using UnityEngine;
 public class LiftManagerVanish : MonoBehaviour
 {
     /// <summary>初期動作を設定できる。</summary>
-    [SerializeField] liftmode liftmoving = default;
+    [SerializeField, Tooltip("リフトの移動方向")] liftmode liftmoving = default;
     int _liftmode;
-    [SerializeField] bool playOnCollision = default;
-    [SerializeField] float m_animSpeed = default;
+    [SerializeField, Tooltip("プレイヤーが乗った時に作動するか(基本ON)")] bool playOnCollision = default;
+    [SerializeField, Tooltip("リフトの移動速度")] float m_animSpeed = default;
     Animator m_anim = default;
     // Start is called before the first frame update
     void Start()

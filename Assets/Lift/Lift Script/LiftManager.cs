@@ -5,10 +5,10 @@ using UnityEngine;
 public class LiftManager : MonoBehaviour
 {
     /// <summary>初期動作を設定できる。</summary>
-    [SerializeField] liftmode liftmoving = default;
+    [SerializeField, Tooltip("リフトの移動方向(斜め移動リフトの時は右のほうを参照)")] Liftmode liftMoving = default;
     int _liftmode;
-    [SerializeField] bool playOnCollision = default;
-    [SerializeField] float m_animSpeed = default;
+    [SerializeField, Tooltip("プレイヤーが乗った時に作動するか")] bool playOnCollision = default;
+    [SerializeField, Tooltip("リフトの移動速度")] float m_animSpeed = default;
     AudioSource m_audioSource;
     Animator m_anim = default;
     // Start is called before the first frame update
@@ -16,8 +16,7 @@ public class LiftManager : MonoBehaviour
     {
         m_anim = GetComponent<Animator>();
         m_audioSource = GetComponent<AudioSource>();
-        _liftmode = (int)liftmoving;
-        Debug.Log(_liftmode);
+        _liftmode = (int)liftMoving;
         m_anim.SetInteger("Liftmoving", _liftmode);
         
     }
@@ -50,22 +49,22 @@ public class LiftManager : MonoBehaviour
         m_audioSource.Play();
     }
 
-    enum liftmode
+    enum Liftmode
     {
         /// <summary>
-        /// 上に動く。
+        /// 上/右下に動く。
         /// </summary>
         Up_RightDown,
         /// <summary>
-        /// 下に動く。
+        /// 下/左下に動く。
         /// </summary>
         Down_LeftDown,
         /// <summary>
-        /// 左に動く。
+        /// 左/左上に動く。
         /// </summary>
         Left_LeftUp,
         /// <summary>
-        /// 右に動く。
+        /// 右/右上に動く。
         /// </summary>
         Right_RightUp,
     }
